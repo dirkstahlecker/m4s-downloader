@@ -1,0 +1,17 @@
+#! /usr/bin/env bash
+
+#search vod in dirtvision network
+#find a master.json file
+#https://78vod-adaptive.akamaized.net/exp=1635246571~acl=%2F57cf7df0-0bb2-42ad-b695-91b397ab8acd%2F%2A~hmac=cbb96a8e6cf87291656b77c94e44644dbce4381726e1eace0103740a01d1cc1a/57cf7df0-0bb2-42ad-b695-91b397ab8acd/sep/video/f7a657b7,e3e8fbb5,3416dcbe,7b3ba93b,ef5d055b/master.json
+
+outputFilePath=$2
+tempVideoPath=./videoOutputFile.m4v
+tempAudioPath=./audioOutputFile.m4a
+
+node vimeo-downloader.js $1
+
+ffmpeg -i $tempVideoPath -i $tempAudioPath -acodec copy -vcodec copy $outputFilePath
+
+#clean up
+rm $tempAudioPath
+rm $tempVideoPath
